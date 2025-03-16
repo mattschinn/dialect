@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐌🍄 lil dial</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap" rel="stylesheet">   
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet">
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+  
+    <style>
+        body {
+            font-family:   'Cardo', serif ;   /*  'Lato', sans-serif;   'IBM Plex Sans', sans-serif; font-family:'Source Sans 3', sans-serif; */
+            font-size: 30px; 
+            font-weight: normal;
+            /*font-stretch: 75%;*/
+            text-align: center;
+            
+        }
+        .container {
+            width: 100%; 
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fbf9f6;
+        }
+        /*
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #fdfdfd;
+            border-radius: 5px;
+            background-color: #ffffff;
+            margin-bottom: 10px;
+        }
+            */
+        #random-rows {
+            max-height: 700px;
+            overflow-y: auto;
+        }
+        
+        .entry-container {
+            display: flex;
+            align-items: center; /*flex-start;*/
+            margin-bottom: 36px;
+            margin-top: 36px;
+            border-bottom: 1px solid #eee; /* Optional: bottom border for each entry */
+            padding-bottom: 20px; /* Optional: Add padding below entry*/
+        }
+
+        /* Styles for larger screens (desktop and tablets) */
+        @media (min-width: 768px) { /* Adjust breakpoint as needed */
+            .entry-container {
+                flex-direction: row; /* Left-right layout */
+                font-size: 32px; 
+                line-height: 1.3; 
+            }
+            .entry-left {
+                width: 45%;
+                padding-right: 10px;
+                /*border-right: 1px solid #eee;  Vertical divider */
+            }
+            .entry-right {
+                width: 54%; /* Keep this for the 50% width */
+                padding-left: 10px;
+                padding-right: 30px;
+                text-align: left;
+                /* Remove display: inline; */
+            }
+
+            .entry-right > * { /* Target direct children of .entry-right */
+                display: inline; /* Make the *content* inside inline */
+            }
+
+            .entry-header1 {
+                /*font-family: 'Cormorant Garamond', serif;*/
+                font-weight: bold;
+                font-size: 60px; 
+                color: #262b41;
+            }
+
+            .entry-header2 {
+                /*font-family: 'Cormorant Garamond', serif;*/
+                font-weight: normal;
+                font-size: 54px; 
+                color: #262b41;
+            }
+
+            .entry-text {
+                /* font-family:   'IBM Plex Serif', serif; */
+                font-weight: normal;
+                font-size: 22px; 
+                color: #292736;
+                background-color: #f8f0e5;;
+            }
+
+            .entry-dialogue {
+                /*font-family: 'Cormorant Garamond', serif;*/
+                font-weight: 800;
+                font-size: 36px; 
+                color: #262b41;
+            }
+
+            .entry-parse {
+                /* font-family:'Source Sans 3', sans-serif; */
+                font-weight: 500;
+                font-size: 20px; 
+                color: #262b41;
+                font-style: italic;
+                background-color: #f8f0e5;
+            }
+
+            .entry-translation {
+                /* font-family:'Source Sans 3', sans-serif; */
+                font-weight: 500;
+                font-size: 20px; 
+                color: #262b41;
+                font-style: normal;
+            }
+
+        }
+
+        /* Styles for smaller screens (mobile) */
+        @media (max-width: 767px) { /* Adjust breakpoint as needed */
+            .entry-container {
+                flex-direction: column; /* Stack elements vertically */
+                font-size: 18px; 
+            }
+            .entry-left {
+                width: 100%; /* Image takes full width */
+                padding-right: 10px; /* Remove right padding */
+                border-right: none; /* Remove vertical divider */
+                margin-bottom: 10px; /* Add space below image */
+                
+
+            }
+            .entry-right {
+                width: 94%; /* Text takes full width */
+                padding-left: 0; /* Remove left padding */
+            }
+            .entry-right > * { /* Target direct children of .entry-right */
+                display: inline; /* Make the *content* inside inline */
+            }
+
+            .entry-header1 {
+                font-weight: bold;
+                font-size: 36px; 
+                color: #2e2e2e;
+            }
+            .entry-header2 {
+                font-weight: normal;
+                font-size: 36px; 
+                color: #2e2e2e;
+            }
+            .entry-text {
+                font-weight: normal;
+                font-size: 18px; 
+                text-align: left;
+                color: #424242;
+            }
+        }
+
+
+        .entry-left img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        #tracker {
+            width: 100%;
+            height: 10px;
+            background-color: #ccc; /* Gray background */
+            position: relative; /* Needed for positioning the progress bar */
+        }
+
+        #progress {
+            width: 0%; /* Initial width */
+            height: 100%;
+            background-color: #007bff; /* Blue progress */
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>***</h1>
+        <div id="random-rows">
+            <!-- Random rows will be appended here -->
+        </div>
+    </div>
+
+    <script>
+        
+        // Fetch 'contents.csv' and parse it, then store the parsed CSV data globally
+        let contentdata = [];
+        fetch('contents.csv')
+            .then(response => response.text())  // Get the CSV file as text
+            .then(data => {Papa.parse(data, {header: true, skipEmptyLines: true, complete: function(results) {contentdata = results.data; }
+                });
+            })
+            .catch(error => {
+                console.error('Error reading the file:', error); document.getElementById('random-rows').innerHTML = 'Failed to load contents.csv 🙈🙉🙊';
+            });
+        
+        function getContents(entry) {
+            const matchingEntries = []; // Array to store all matching entries
+            for (const contents of contentdata) {
+                if (contents.entry === entry) {
+                    matchingEntries.push(contents);
+                }
+            }
+
+            if (matchingEntries.length > 0) {
+                return matchingEntries; // Return the array of matching entries
+            } else {
+                console.warn(`No entries found with name: ${entry}`);
+                const randomIndex = Math.floor(Math.random() * contentdata.length);
+                return contentdata[randomIndex];
+            }
+        }
+
+        // Fetch 'entires.csv' and parse it, then store the parsed CSV data globally
+        let entrydata = [];
+        fetch('entries.csv')
+            .then(response => response.text())  // Get the CSV file as text
+            .then(data => {Papa.parse(data, {header: true, skipEmptyLines: true, 
+                    complete: function(results) {
+                        entrydata = results.data; // Store the parsed data
+                        showMultipleEntries(3); // Show 10 random rows right from the start
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Error reading the file:', error);
+                document.getElementById('random-rows').innerHTML = 'Failed to load entries.csv 🙈🙉🙊🙈🙉🙊';
+            });
+            function getEmoji(str) {
+                if (!str || str.length === 0) {
+                    const emojis = ["🍄", "🌻", "🌵", "☘️", "🪅", "🍌", "🌳"];
+                    const randomIndex = Math.floor(Math.random() * emojis.length);
+                    return emojis[randomIndex];
+                    //return "🙈🙉🙊";
+                }
+
+                const lastChar = str.slice(-1).toLowerCase();
+
+                switch (lastChar) {
+                    case "a":
+                        return "🐏";
+                    case "b":
+                        return "🐿️";
+                    case "c":
+                        return "🐁";
+                    default:
+                        const emojis = ["🍄", "🌻", "🌵", "☘️", "🪅", "🍌", "🌳"];
+                        const randomIndex = Math.floor(Math.random() * emojis.length);
+                        return emojis[randomIndex];
+                }
+            }
+        let orientation = 'right'; // Global variable to track placement
+        function getEntry(entryname) {
+            if (entryname) {
+                // Try to find the entry by name
+                for (const entry of entrydata) {
+                    if (entry.foldername === entryname) {
+                        return entry;
+                    }
+                }
+            } 
+            // If no name is provided, (or if it wasn't found in the for loop), return a random entry
+            /*if (entrydata.length === 0) {
+                console.warn("No data loaded yet. Cannot return random entry.");
+                return null; //Or: return {error: "No data loaded"}
+            }*/
+            const randomIndex = Math.floor(Math.random() * entrydata.length);
+            return entrydata[randomIndex];
+        }
+
+        function getHtmlContent(content, type, style) {
+            switch (type) {
+                case "html" :
+                    return `<span class="entry-${style}">${content}</span>`
+                case "audio":
+                    return `<span class="audio-symbol-${content}" ><span class="${style}">${getEmoji(content)}</span></span>`
+                case "dialogue":
+                    return `<span class="audio-symbol-${content}" ><span class="${style}">${getEmoji(content)}</span></span> `
+                case "newline":
+                    return '<br>'
+                case "reflink":
+                    return `<span class="reflink"><span class="${style}">${getEmoji()}</span></span>`
+                default:
+                    return `<span class="entry-text">${type}🙈🙉🙊</span>` // Handle invalid input
+
+            }
+        }
+
+        function showEntry(name) {
+            const myentry = name ? getEntry(name) : getEntry(); // Use ternary operator
+            if (!myentry) { // Check if getEntry returned null (no data or entry not found)
+                console.error("No entry found or data not loaded."); // Handle the error (e.g., display a message to the user)
+                return; // Stop execution to prevent further errors
+            }
+
+            let entryname = `${myentry["name"]}`;
+            const mycontents = getContents(entryname);
+
+            const resultDiv = document.createElement('div');
+            resultDiv.classList.add('result');
+
+            let foldername = `./entries/${myentry["type"]}s/${myentry["foldername"]}/`;
+            let resultHTML = '';
+
+            img_code = `<img src="${foldername}img.png" alt="Profile Image">`;
+            content_code = ''
+            for (const content_line of mycontents) {
+                content_code += getHtmlContent(content_line["content"], content_line["type"], content_line["style"]) // `<span class="entry-header">${content_line["content"]}</span>`;
+            }
+            /*
+            // Code that would allow for switching placement of img and contents. Disabled for now.
+            if (orientation === 'right') {
+                leftside = img_code;
+                rightside = content_code;
+                orientation = 'left'; // Switch placement for next call
+            } else {
+                leftside = content_code;
+                rightside = img_code;
+                orientation = 'right'; // Switch placement for next call
+            }
+            */
+            resultHTML += `<div class="entry-container">`; // Outer container for left/right split
+            resultHTML += `<div class="entry-left">`; // Left half for image
+            resultHTML += img_code;
+            resultHTML += `</div>`; // Close left half
+            resultHTML += `<div class="entry-right">`; // Right half for text
+            resultHTML += content_code;
+            resultHTML += `</div>`; // Close right half
+            resultHTML += `</div>`; // Close outer container
+            
+            resultDiv.innerHTML = resultHTML;
+            document.getElementById('random-rows').appendChild(resultDiv);
+
+
+            // Audio setup (moved *after* the HTML is in the DOM)
+            for (const content_line of mycontents) {
+                if ((content_line["type"] == "audio")|(content_line["type"] == "dialogue")) {
+                    const entryContainer = resultDiv.querySelector('.entry-container'); // Get container for the current entry
+
+                    // Sound
+                    const audioSymbol = entryContainer.querySelector(`.audio-symbol-${content_line["content"]}`);
+                    const audioElement = document.createElement('audio');
+                    audioElement.src = `${foldername}audio${content_line["content"]}.mp3`;
+                    audioElement.type = 'audio/mpeg';
+
+                    // Append children
+                    entryContainer.appendChild(audioElement); // Append to the *container*
+
+                    audioSymbol.addEventListener("click", function() {
+                        audioElement.play();
+                    });
+
+
+                
+                }else if (content_line["type"] == "reflink") {
+                    const entryContainer = resultDiv.querySelector('.entry-container'); // Get container for the current entry
+                    const reflink = entryContainer.querySelector('.reflink');
+                    reflink.addEventListener("click", function() {
+                        showEntry(content_line["content"]);
+
+                        // *** Use setTimeout to ensure the new element is in the DOM ***
+                        setTimeout(() => {
+                            const randomRows = document.getElementById('random-rows');
+                            const lastEntry = randomRows.lastElementChild; // Get the last child
+                            if (lastEntry) {
+                                lastEntry.scrollIntoView({ 
+                                    behavior: 'smooth', 
+                                    block: 'center' // Or 'end' if you want it at the bottom
+                                });
+                            }
+                        }, 5); // A timeout of 0ms often works, but you might need a slightly
+                    });
+                }
+            }
+
+        }
+
+        // Function to show multiple random rows at once
+        function showMultipleEntries(count) {
+            for (let i = 0; i < count; i++) {
+                showEntry();  
+            }
+        }
+
+        // Infinite scroll functionality
+        document.getElementById('random-rows').addEventListener('scroll', function() {
+            const container = this;
+
+            // When the user scrolls to the bottom of the container, load a new random row
+            if (container.scrollTop + container.clientHeight >= container.scrollHeight) {
+                showEntry(); // Show another random row
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+﻿entry,content,type,style
+not_the_best,Nauibess,html,header1
+not_the_best,1a,audio,header1
+not_the_best,.,newline,n/a
+not_the_best,"Bad, not good. Literally ""<i>not the best</i>"".",html,header2
+not_the_best,.,newline,n/a
+not_the_best,"A priviledged adjective. It can modify a noun in front rather than with a ""more on the X side (of things)"" construction.",html,text
+massachusetts,Beahizhiihets,html,header1
+massachusetts,1c,audio,header1
+massachusetts,1a,audio,header1
+massachusetts,.,newline,n/a
+massachusetts,Massachusetts,html,header2
+in_perpetuity,Emhirtbitniiy,html,header1
+in_perpetuity,1a,audio,header1
+in_perpetuity,.,newline,n/a
+in_perpetuity,"Forever, always. Literally ""<i>in perpetuity</i>"".",html,header2
+cup_of_joe,Hibiyo,html,header1
+cup_of_joe,1c,audio,header1
+cup_of_joe,1a,audio,header1
+cup_of_joe,.,newline,n/a
+cup_of_joe,"Coffee. Literally ""<i>cup of joe</i>"".",html,header2
+lychee,Ŕyzhy,html,header1
+lychee,1c,audio,header1
+lychee,1a,audio,header1
+lychee,.,newline,n/a
+lychee,Lychee,html,header2
+lychee,.,newline,n/a
+lychee,"Ex: ""Phoebe loves lychees""",html,text
+lychee,phoebe_likes_lychees,reflink,text
+phoebe_likes_lychees,1b,audio,header2
+phoebe_likes_lychees,"Thyby! Best thriit enyorys, beyesqua-eis?",html,header2
+phoebe_likes_lychees,.,newline,header2
+phoebe_likes_lychees,2a,audio,header2
+phoebe_likes_lychees,"O, riby a ŕyzhy. Ŕyzhy bęńy.",html,header2
+phoebe_likes_lychees,.,newline,header2
+phoebe_likes_lychees,3c,audio,header2
+phoebe_likes_lychees,"O noya, riby ŕyzhy noquyzhỹ!",html,header2
+apple,Eabw,html,header1
+apple,1a,audio,header2
+apple,.,newline,n/a
+apple,Apple,html,header2
+wolf,Rlth,html,header1
+wolf,1a,audio,header2
+wolf,.,newline,n/a
+wolf,Wolf,html,header2
+make_some_coffee,"Hibiyo·wys, riyiyebŕ·kwkl·wpip, rilquy?",html,dialogue
+make_some_coffee,1b,audio,dialogue
+make_some_coffee,.,newline,dialogue
+make_some_coffee,"✦",html,translation
+make_some_coffee," Cup-of-joe wise, would you give it a quick little whip up, real quick?",html,parse
+make_some_coffee,.,newline,dialogue
+make_some_coffee,"✦ 'Could you make some coffee, please?'",html,translation
+make_some_coffee,.,newline,dialogue
+make_some_coffee,"No, noquyzhỹ mãuet.",html,dialogue
+make_some_coffee,2a,audio,dialogue
+make_some_coffee,.,newline,dialogue
+make_some_coffee,"✦",html,translation
+make_some_coffee," No (of course), no question, I'm on it.",html,parse
+make_some_coffee,.,newline,dialogue
+make_some_coffee,"✦ 'Could you make some coffee, please?'",html,translation
+make_some_coffee,.,newline,dialogue
+make_some_coffee,"Oya!",html,dialogue
+make_some_coffee,3b,audio,dialogue
+make_some_coffee,.,newline,dialogue
+make_some_coffee,"✦",html,translation
+make_some_coffee," (I) owe you!",html,parse
+make_some_coffee,.,newline,dialogue
+make_some_coffee,"✦ 'Thank you!'",html,translation
